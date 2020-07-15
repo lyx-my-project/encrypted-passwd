@@ -61,6 +61,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.lyx.App</mainClass> <!-- 入口主类 -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
