@@ -1,6 +1,5 @@
 package com.lyx.process;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
@@ -9,8 +8,10 @@ import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import com.lyx.common.CommonResult;
 import com.lyx.entity.Question;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -25,7 +26,17 @@ public class QuestionServiceImpl
     public CommonResult getPasswd(Question question)
     {
         // 读取密文
-        byte[] encryptContent = FileUtil.readBytes("/Users/lgf/my-dir/project/other/encrypted-passwd/src/main/resources/static/EncryptContent");
+        byte[] encryptContent;
+        try
+        {
+            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("static/EncryptContent");
+            encryptContent = StreamUtils.copyToByteArray(inputStream);
+            inputStream.close();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e.getMessage());
+        }
 
         // 获取密钥
         byte[] key = this.getKey(StrUtil.format("{}{}", question.getChuoHao(), question.getXiaoMing()));
