@@ -42,10 +42,16 @@ public class QuestionServiceImpl
         byte[] key = this.getKey(StrUtil.format("{}{}", question.getChuoHao(), question.getXiaoMing()));
 
         // 解密数据
-        AES aes = SecureUtil.aes(key);
-        String content = aes.decryptStr(encryptContent);
-
-        return CommonResult.successData(content);
+        try
+        {
+            AES aes = SecureUtil.aes(key);
+            String content = aes.decryptStr(encryptContent);
+            return CommonResult.successData(content);
+        }
+        catch (Exception e)
+        {
+            return CommonResult.errorMsg("回答不正确");
+        }
     }
 
     /**
