@@ -50,9 +50,8 @@ public class QuestionServiceImpl
 
     /**
      * 获取密钥
-     * @param keyStr 密钥字符串
-     * @return 官钥
-     * @throws NoSuchAlgorithmException 异常
+     * @param keyStr 用来生成密钥字符串，可以把它等同于密钥.
+     * @return 密钥
      */
     public byte[] getKey(String keyStr)
     {
